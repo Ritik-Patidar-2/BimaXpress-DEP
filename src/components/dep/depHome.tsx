@@ -92,7 +92,7 @@ const DepHome = () => {
             icon: draft,
             //@ts-ignore
             amount: counter?.draft,
-            pageLink: '/ALLDEdraftcases',
+            pageLink: '/DEdraftcases',
           },
           {
             name: 'Unprocessed',

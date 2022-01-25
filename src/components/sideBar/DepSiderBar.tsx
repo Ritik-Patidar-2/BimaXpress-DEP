@@ -25,7 +25,7 @@ const homeMenu = {
   name: 'Home',
 
   icon: <AiFillHome className='text-fontColor mr-4 ml-2 md:ml-5 text-xl' />,
-  pageLink: '/depHome',
+  pageLink: '/',
 };
 // const emailMenu = {
 //   name: 'Mail',

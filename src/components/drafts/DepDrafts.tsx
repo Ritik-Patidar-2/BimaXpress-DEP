@@ -91,13 +91,23 @@ const DepDrafts = () => {
     setOpenEnhanceAndFciModal((pre) => !pre);
   };
 
+
+  const [hospitalList,sethospitalList] = useState<any>([]);
+
   const fetchAnalyst = async () => {
     dispatch(setLoading(true));
     console.log(param?.case);                        // -------------------------------
-    const URL = `/${param?.case}`;
+    const URL = `/ALL${param?.case}`;
 
-    // const URL = `/${param?.case}?email=abnew@gmail.com`;
     try {
+      const listOfHospital = await axiosConfig.get(`/listofhospitals?email=${user}`);
+
+      Object.entries(listOfHospital.data.data).forEach(([key, value]) => {
+        hospitalList.push({ label: value, value: key });
+      });
+      sethospitalList(hospitalList);
+      console.log(hospitalList);
+
       const { data } = await axiosConfig.get(URL);
       console.log(data);                                // -------------------------------
       dispatch(setLoading(false));
@@ -117,7 +127,7 @@ const DepDrafts = () => {
   }, []);
 
   const showDetails = (value: string) => {
-    if (param?.case === 'draftcases') {
+    if (param?.case === 'DEdraftcases') {
       navigate(`/newCase/${value}`);
     } else {
       //@ts-ignore
@@ -277,10 +287,42 @@ const DepDrafts = () => {
   );
 
   const [options, setOptions] = useState({
+    hospitalList:'',
     insuranceTPA: '',
     dateRange: '',
   });
 
+  const fetchSelectedHospital = async (selectedHospital: any) => {
+    dispatch(setLoading(true));
+    // const URL = `/${param?.case}`;
+    const URL = `/${param?.case}?email=${selectedHospital}`
+    try {
+      const { data } = await axiosConfig.get(URL);
+      // console.log("After select URL - ",URL);
+      console.log(data);                                // -------------------------------
+      dispatch(setLoading(false));
+      dispatch(setCaseData(data?.data));
+    } catch (error) {
+      dispatch(setLoading(false));
+      //@ts-ignore
+      notification('error', error?.message);
+    }
+  };
+
+  const handleHospitalChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLDataElement | any
+    >
+  ) => {
+    const { name, value } = e.target;
+    setOptions((pre: any) => ({
+      ...pre,
+      [name]: value,
+    }));
+    fetchSelectedHospital(value);
+  };
+  
+  
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLDataElement | any
@@ -326,11 +368,12 @@ const DepDrafts = () => {
             </div>
             <div className='mr-2'>
             <NewCaseSelect
-                options={dateRange}
-                name='dateRange'
-                handleChange={handleChange}
-                defaultOption='Status'
-                value={options?.dateRange || ''}
+                options={hospitalList}
+                // options={listOfHospitals}
+                name='hospitalList'
+                handleChange={handleHospitalChange}
+                defaultOption='Hospital'
+                value={options?.hospitalList || ''}
                 style={{
                   minWidth: '125px',
                   height: '30px',

@@ -97,7 +97,7 @@ const DepDrafts = () => {
   const fetchAnalyst = async () => {
     dispatch(setLoading(true));
     console.log(param?.case);                        // -------------------------------
-    const URL = `/ALL${param?.case}`;
+    const URL = `/all${param?.case}`;
 
     try {
       const listOfHospital = await axiosConfig.get(`/listofhospitals?email=${user}`);
@@ -127,7 +127,7 @@ const DepDrafts = () => {
   }, []);
 
   const showDetails = (value: string) => {
-    if (param?.case === 'DEdraftcases') {
+    if (param?.case === 'dedraftcases') {
       navigate(`/newCase/${value}`);
     } else {
       //@ts-ignore

@@ -92,7 +92,7 @@ const DepHome = () => {
             icon: draft,
             //@ts-ignore
             amount: counter?.draft,
-            pageLink: '/DEdraftcases',
+            pageLink: '/ALLDEdraftcases',
           },
           {
             name: 'Unprocessed',
@@ -100,7 +100,7 @@ const DepHome = () => {
             icon: process,
             //@ts-ignore
             amount: counter?.Unprocessed,
-            pageLink: '/caseData/unprocessedcases',
+            pageLink: '/DEunprocessedcases',
           },
           {
             name: 'Queries',
@@ -108,7 +108,7 @@ const DepHome = () => {
             icon: query,
             //@ts-ignore
             amount: counter?.query,
-            pageLink: '/caseData/querycases',
+            pageLink: '/DEquerycases',
           },
           {
             name: 'Approved',
@@ -116,7 +116,7 @@ const DepHome = () => {
             icon: approved,
             //@ts-ignore
             amount: counter?.Approved,
-            pageLink: '/caseData/approvedcases',
+            pageLink: '/DEapprovedcases',
           },
           {
             name: 'Rejected',
@@ -124,7 +124,7 @@ const DepHome = () => {
             icon: reject,
             //@ts-ignore
             amount: counter?.Reject,
-            pageLink: '/caseData/rejectcases',
+            pageLink: '/DErejectcases',
           },
           {
             name: 'Enhance',
@@ -132,7 +132,7 @@ const DepHome = () => {
             icon: enhance,
             //@ts-ignore
             amount: counter?.Enhance,
-            pageLink: '/caseData/enhancedcases',
+            pageLink: '/DEenhancedcases',
           },
           {
             name: 'FCI',
@@ -140,7 +140,7 @@ const DepHome = () => {
             icon: fci,
             //@ts-ignore
             amount: counter?.fci,
-            pageLink: '/caseData/fcicases',
+            pageLink: '/DEfcicases',
           },
           {
             name: 'Discharge Approved',
@@ -148,7 +148,7 @@ const DepHome = () => {
             icon: dischargedApproved,
             //@ts-ignore
             amount: counter?.Discharge_Approved,
-            pageLink: '/caseData/dischargeapprovedcases',
+            pageLink: '/DEdischargeapprovedcases',
           },
           {
             name: 'Settle',
@@ -156,7 +156,7 @@ const DepHome = () => {
             icon: approved,
             //@ts-ignore
             amount: counter?.Settled,
-            pageLink: '/caseData/settledcases',
+            pageLink: '/DEsettledcases',
           },
         ]);
       }

@@ -22,74 +22,118 @@ import { useAppSelector } from './redux/hooks';
 import PreauthForm from './components/preauthForm/PreauthForm';
 import DepHome from './components/dep/depHome';
 import DepLayout from './components/layout/DepLayout';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axiosConfig from './config/axiosConfig';
 import DepDrafts from './components/drafts/DepDrafts';
+
 
 function App() {
   
   const { user } = useAppSelector((state) => state?.user);
-
   const Wrapper = (element: any) => <Layout>{element}</Layout>;
 
   const DepWrapper = (element: any) => <DepLayout>{element}</DepLayout>;
+  const [userRole,setuserRole] = useState("");
   
+
+  useEffect(() =>{
+    const fetchRole = async() =>{
+      // const URL = `/role?email=${user}`;
+      // console.log("user inside effect",user);
+      const URL = `/role?email=${user}`;
+      try {
+        const {
+          data: { data },
+        } = await axiosConfig.get(URL);
+        setuserRole(data.Role);
+        // console.log("state variable",userRole)
+      } catch (error) {
+        //@ts-ignore
+      }
+    }
+    fetchRole();
+  },[user]);
   
-  console.log(user);
-  
+  // console.log("User - ",user );
+
   return (
     
-
     <Router>
       <Routes>
-        
-        {user ? (
-
-            <>
-            <Route path='/preauthform' element={<PreauthForm />} />
-            <Route path='/' element={DepWrapper(<DepHome />)} />
-            <Route path='/plan' element={Wrapper(<Plan />)} />
-            <Route path='/hospital' element={Wrapper(<Hospital />)} />
-            <Route path='/analyst' element={Wrapper(<Analyst />)} />
-            <Route path='/analyst/:key' element={Wrapper(<AnalystUpdate />)} />
-            <Route
-              path='/analyst/create'
-              element={Wrapper(<AnalystCreate />)}
-            />
-            <Route path='/doctor' element={Wrapper(<Doctor />)} />
-            <Route path='/doctor/create' element={Wrapper(<DoctorCreate />)} />
-            <Route path='/doctor/:key' element={Wrapper(<DoctorUpdate />)} />
-            <Route path='/newCase' element={Wrapper(<NewCase />)} />
-            <Route path='/newCase/:case' element={Wrapper(<NewCase />)} />
-
-            {/* <Route path='/' element={Wrapper(<DepHome />)} /> */}
-            <Route path='/order' element={Wrapper(<Order />)} />
-            {/* <Route path='/caseData/:case' element={Wrapper(<Drafts />)} /> */}
-            <Route path='/:case' element={DepWrapper(<DepDrafts />)} />
-
-            <Route path='/mail' element={Wrapper(<Mail />)} />
-            <Route
-              path='/empanelledCompanies'
-              element={Wrapper(<EmpanelledCompanies />)}
-            />
-            <Route
-              path='/empanelledCompanies/create'
-              element={Wrapper(<CreateCompany />)}
-            />
-            <Route
-              path='/empanelledCompanies/:key'
-              element={Wrapper(<UpdateCompanies />)}
-            />
+        {user ? ( userRole === "admin" ? (
+              <>
+                <Route path='/preauthform' element={<PreauthForm />} />
+                <Route path='/' element={Wrapper(<Home />)} />
+                <Route path='/plan' element={Wrapper(<Plan />)} />
+                <Route path='/hospital' element={Wrapper(<Hospital />)} />
+                <Route path='/analyst' element={Wrapper(<Analyst />)} />
+                <Route path='/analyst/:key' element={Wrapper(<AnalystUpdate />)} />
+                <Route
+                  path='/analyst/create'
+                  element={Wrapper(<AnalystCreate />)}
+                />
+                <Route path='/doctor' element={Wrapper(<Doctor />)} />
+                <Route path='/doctor/create' element={Wrapper(<DoctorCreate />)} />
+                <Route path='/doctor/:key' element={Wrapper(<DoctorUpdate />)} />
+                <Route path='/newCase' element={Wrapper(<NewCase />)} />
+                <Route path='/newCase/:case' element={Wrapper(<NewCase />)} />
+                <Route path='/order' element={Wrapper(<Order />)} />
+                <Route path='/caseData/:case' element={Wrapper(<Drafts />)} />
+                <Route path='/mail' element={Wrapper(<Mail />)} />
+                <Route
+                  path='/empanelledCompanies'
+                  element={Wrapper(<EmpanelledCompanies />)}
+                />
+                <Route
+                  path='/empanelledCompanies/create'
+                  element={Wrapper(<CreateCompany />)}
+                />
+                <Route
+                  path='/empanelledCompanies/:key'
+                  element={Wrapper(<UpdateCompanies />)}
+                />
             </>
-
-          ):(
+            ) : (
+              <>
+                <Route path='/preauthform' element={<PreauthForm />} />
+                <Route path='/' element={DepWrapper(<DepHome />)} />
+                <Route path='/plan' element={DepWrapper(<Plan />)} />
+                <Route path='/hospital' element={DepWrapper(<Hospital />)} />
+                <Route path='/analyst' element={DepWrapper(<Analyst />)} />
+                <Route path='/analyst/:key' element={DepWrapper(<AnalystUpdate />)} />
+                <Route
+                  path='/analyst/create'
+                  element={DepWrapper(<AnalystCreate />)}
+                />
+                <Route path='/doctor' element={DepWrapper(<Doctor />)} />
+                <Route path='/doctor/create' element={DepWrapper(<DoctorCreate />)} />
+                <Route path='/doctor/:key' element={DepWrapper(<DoctorUpdate />)} />
+                <Route path='/newCase' element={DepWrapper(<NewCase />)} />
+                <Route path='/newCase/:case' element={DepWrapper(<NewCase />)} />
+                <Route path='/order' element={DepWrapper(<Order />)} />
+                <Route path='/:case' element={DepWrapper(<DepDrafts />)} />
+                <Route path='/mail' element={DepWrapper(<Mail />)} />
+                <Route
+                  path='/empanelledCompanies'
+                  element={DepWrapper(<EmpanelledCompanies />)}
+                />
+                <Route
+                  path='/empanelledCompanies/create'
+                  element={DepWrapper(<CreateCompany />)}
+                />
+                <Route
+                  path='/empanelledCompanies/:key'
+                  element={DepWrapper(<UpdateCompanies />)}
+                />
+              </>
+        )) : (
           <>
             <Route path='/preauthform' element={<PreauthForm />} />
-            {/* <Route path='/' element={DepWrapper(<DepHome />)} /> */}
             <Route path='/' element={<LoginPage />} />
             <Route path='/login' element={<LoginPage />} />
           </>
-        )}
+        )
+      }
       </Routes>
     </Router>
   );

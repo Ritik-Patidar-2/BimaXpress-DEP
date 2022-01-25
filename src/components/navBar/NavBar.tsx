@@ -1,5 +1,6 @@
 import React from "react";
 import { BiLink, BiBell } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 import userImage from "../../assets/images/user.jpg";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setRole, setUser, setUserData } from "../../redux/slices/userSlice";
@@ -8,12 +9,14 @@ const NavBar = () => {
   const { currentMenu } = useAppSelector((state) => state?.home);
   const { user, userData, role } = useAppSelector((state) => state?.user);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     sessionStorage?.removeItem("bimaUser");
     dispatch(setUserData({}));
     dispatch(setUser(""));
     dispatch(setRole(""));
+    navigate('/');
   };
 
   return (

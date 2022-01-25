@@ -53,6 +53,7 @@ const dateRange = [
   { label: 'Last year', value: 'last_year' },
 ];
 
+
 interface ColumnDetails {
   [key: string]: any;
 }
@@ -92,8 +93,10 @@ const DepDrafts = () => {
 
   const fetchAnalyst = async () => {
     dispatch(setLoading(true));
-    console.log(param?.case);                        //------------------------------
-    const URL = `/${param?.case}?email=${user}`;
+    console.log(param?.case);                        // -------------------------------
+    const URL = `/${param?.case}`;
+
+    // const URL = `/${param?.case}?email=abnew@gmail.com`;
     try {
       const { data } = await axiosConfig.get(URL);
       console.log(data);                                // -------------------------------
@@ -105,6 +108,7 @@ const DepDrafts = () => {
       notification('error', error?.message);
     }
   };
+
 
   useEffect(() => {
     fetchAnalyst();
@@ -321,14 +325,14 @@ const DepDrafts = () => {
               <img src={filter} alt='icon' />
             </div>
             <div className='mr-2'>
-              <NewCaseSelect
-                options={insuranceCompany}
-                name='insuranceTPA'
+            <NewCaseSelect
+                options={dateRange}
+                name='dateRange'
                 handleChange={handleChange}
-                defaultOption='Insurance TPA'
-                value={options?.insuranceTPA || ''}
+                defaultOption='Status'
+                value={options?.dateRange || ''}
                 style={{
-                  minWidth: '170px',
+                  minWidth: '125px',
                   height: '30px',
                   backgroundColor: '#FFFFFF17',
                   padding: '0px 5px',
@@ -339,13 +343,13 @@ const DepDrafts = () => {
             </div>
             <div className='mr-2'>
               <NewCaseSelect
-                options={dateRange}
-                name='dateRange'
+                options={insuranceCompany}
+                name='insuranceTPA'
                 handleChange={handleChange}
-                defaultOption='Status'
-                value={options?.dateRange || ''}
+                defaultOption='Insurance TPA'
+                value={options?.insuranceTPA || ''}
                 style={{
-                  minWidth: '125px',
+                  minWidth: '170px',
                   height: '30px',
                   backgroundColor: '#FFFFFF17',
                   padding: '0px 5px',

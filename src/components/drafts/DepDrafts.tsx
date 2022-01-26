@@ -295,10 +295,13 @@ const DepDrafts = () => {
   const fetchSelectedHospital = async (selectedHospital: any) => {
     dispatch(setLoading(true));
     // const URL = `/${param?.case}`;
-    const URL = `/${param?.case}?email=${selectedHospital}`
+    let URL = `/${param?.case}?email=${selectedHospital}`
     try {
+      if(selectedHospital === ""){
+         URL = `/all${param?.case}`
+      }
       const { data } = await axiosConfig.get(URL);
-      // console.log("After select URL - ",URL);
+      console.log("After select URL - ",URL);
       console.log(data);                                // -------------------------------
       dispatch(setLoading(false));
       dispatch(setCaseData(data?.data));
@@ -372,7 +375,7 @@ const DepDrafts = () => {
                 // options={listOfHospitals}
                 name='hospitalList'
                 handleChange={handleHospitalChange}
-                defaultOption='Hospital'
+                defaultOption='All Hospital'
                 value={options?.hospitalList || ''}
                 style={{
                   minWidth: '125px',
